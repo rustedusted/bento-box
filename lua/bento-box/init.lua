@@ -1,11 +1,4 @@
 local M = {}
--- TODO: create a setup function that would use a flag that would smartly check if the setup is executed only once
--- setup will do the following things
--- return if flag true
--- set flag as the setup function is executing for the first time
--- set the autocommand and variables that are required like the M.buf,M.win and split_win(flag will remain outside)  TODO:read other codes by devs to see the tricks they used to implement setup being executed only once
--- execute the autocommand
--- end
 function M.open_floating_win(filename)
 	if M.buf and vim.api.nvim_buf_is_valid(M.buf) then
 		if not M.buf or not M.win then
