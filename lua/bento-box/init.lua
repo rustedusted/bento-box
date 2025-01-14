@@ -105,8 +105,5 @@ end
 vim.api.nvim_create_user_command("FSRinp", M.input, {})
 vim.api.nvim_create_user_command("FSRout", M.output, {})
 vim.api.nvim_create_user_command("FSRcode", M.code, {})
-vim.keymap.set("n", "<leader>ci", M.input)
-vim.keymap.set("n", "<leader>co", M.output)
-vim.keymap.set("n", "<leader>cp", M.code)
 
 return M
