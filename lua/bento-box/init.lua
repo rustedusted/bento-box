@@ -61,8 +61,12 @@ M.setup = function()
 				"g++ -g -fsanitize=address -std=c++17 -Wall -Wextra -Wshadow -DONPC -O2 -o a.out %s && ./a.out < /tmp/inp > /tmp/dyn-out 2>&1; rm a.out",
 				filename
 			)
-			vim.fn.jobstart(cmd, {
+			if M.job then
+				vim.fn.jobstop(M.job)
+			end
+			M.job = vim.fn.jobstart(cmd, {
 				on_exit = function(_, code)
+					M.job = nil
 					M.code()
 					M.code()
 					print("Compilation and execution finished with exit code: " .. code)
