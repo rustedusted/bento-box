@@ -69,7 +69,9 @@ M.setup = function()
 					M.job = nil
 					M.code()
 					M.code()
-					print("Compilation and execution finished with exit code: " .. code)
+					if M.split_win and vim.api.nvim_win_is_valid(M.split_win) then
+						print("Compilation and execution finished with exit code: " .. code)
+					end
 				end,
 			})
 		end,
@@ -77,17 +79,17 @@ M.setup = function()
 end
 
 M.code = function()
-	if split_win and vim.api.nvim_win_is_valid(split_win) then
-		vim.api.nvim_win_close(split_win, true)
-		split_win = nil
+	if M.split_win and vim.api.nvim_win_is_valid(M.split_win) then
+		vim.api.nvim_win_close(M.split_win, true)
+		M.split_win = nil
 	elseif vim.fn.expand("%"):match("fsr%.cpp$") then
 		local curr = vim.api.nvim_get_current_win()
 		vim.api.nvim_command("vsplit /tmp/dyn-out")
-		split_win = vim.api.nvim_get_current_win()
+		M.split_win = vim.api.nvim_get_current_win()
 		vim.api.nvim_set_current_win(curr)
 	else
 		print("not opened fsr.cpp")
-		split_win = nil
+		M.split_win = nil
 		return
 	end
 end
